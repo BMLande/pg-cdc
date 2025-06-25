@@ -54,7 +54,7 @@ Hit below to cmd to run containers for above images
 
 `$ docker-compose up --build`
 
-When all images running successfully, you can star kafka UI on browser with
+When all images running successfully, you can start kafka UI on browser with
 
 `http://localhost:8080/`
 
@@ -64,7 +64,7 @@ Also, you can start kafka topic subscriber script , with
 
 ## Configuration
 
-When all images running successfully, you need to create postgreas coonection with debzium provided connected, which basically setup replicationn configuration, Hit below API to perform this.
+When all images running successfully, you need to create postgreas coonection with debzium provided connecter API, which basically setup replicationn configuration. Hit below API to perform this.
 
 Http Type : POST
 
@@ -105,15 +105,16 @@ Now everything is setup, you can test PG cdc by inserting records , with
 - insert Record
 `INSERT INTO public.users (id, name, email) VALUES (321, 'Test User', 'te1st@exaspdsafddaddle.com');`
 
-Afetr, you can
+After this, you can
 - visit kafka UI and check message on added topic
 - visit nodejs script running termianl and can see the received message to subscriber
 
 
 ## Problems
 
-- if message not arriving on topic try to run sql cmds from init.sql manually
-- delete the coonctor config reload and then create new one
+- If message not arriving on topic try to run sql cmds from init.sql manually
+- Delete the coonctor config reload and then create new one
+- I have used build/run mac m3 (few docker images configs can be changed on windows)
 
 
 ## Contact

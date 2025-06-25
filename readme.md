@@ -1,6 +1,51 @@
-## How to run
 
-this will build required images
+# Postgres Change Data Captures (PG-CDC)
+
+[![License](https://img.shields.io/github/license/BMLande/pg-cdc)](LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/BMLande/pg-cdc/ci.yml?branch=main)](https://github.com/BMLande/pg-cdc/actions)
+[![Release](https://img.shields.io/github/v/release/BMLande/pg-cdc)](https://github.com/BMLande/pg-cdc/releases)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Testing](#testing)
+- [Problems](#Problems)
+- [Contact](#Contact)
+- [References](#references)
+
+---
+
+## Overview
+
+This service captures PostgreSQL WAL files and automates change data capture (CDC) using Debezium. It leverages a database connector and Kafka to stream and process database changes efficiently.
+
+## Features
+
+- Easy integration with PostgreSQL databases
+- Real-time change data capture
+- Scalable and efficient event streaming
+- Customizable processing pipelines
+- Robust error handling and recovery
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/BMLande/pg-cdc.git
+cd pg-cdc
+
+```
+
+# Install dependencies
+
+```bash
+$ npm install
+```
+
+# Build docker images and run conatiners for below
     
     - kafka
     - postgres
@@ -9,14 +54,19 @@ this will build required images
 
 Hit below to cmd to run containers for above images
 
-
 `$ docker-compose up --build`
 
------
+When all images running successfully, you can star kafka UI on browser with
 
-## Add connector configs
+`http://localhost:8080/`
 
-then add connector configuaration with below POST call from postman
+Also, you can start kafka topic subscriber script , with
+
+`$ node index.js`
+
+## Configuration
+
+When all images running successfully, you need to create postgreas coonection with debzium provided connected, which basically setup replicationn configuration, Hit below API to perform this.
 
 Http Type : POST
 
@@ -44,26 +94,44 @@ Http Type : POST
 		"snapshot.mode": "always"
 	}
 }
-
 ```
 
-## Running kafka UI
 
-kafka UI exposed on `http://localhost:8080/`
+## Testing
 
-## Run message listner
+Now everything is setup, you can test PG cdc by inserting records , with
 
-Added node js script which listen to topic and add in logs , run with
+- connect to DB
+`docker exec -it $(docker ps --filter "ancestor=postgres:15-alpine" --format "{{.ID}}") psql -U postgres -d testdb`
 
-`node index.js`
+- insert Record
+`INSERT INTO public.users (id, name, email) VALUES (321, 'Test User', 'te1st@exaspdsafddaddle.com');`
+
+Afetr, you can
+- visit kafka UI and check message on added topic
+- visit nodejs script running termianl and can see the received message to subscriber
 
 
-## what problem may occur in setup
+
+
+## Problems
+
 - if message not arriving on topic try to run sql cmds from init.sql manually
 - delete the coonctor config reload and then create new one
 
 
-## refrences
+## Contact
+
+Bhagvat Lande – [@BhagvatL](https://twitter.com/BhagvatL) 
+
+Project Link: [https://github.com/BMLande/pg-cdc](https://github.com/BMLande/pg-cdc)
+
+## References
 - https://www.postgresql.org/docs/9.4/logicaldecoding-explanation.html
 - https://debezium.io/documentation/reference/3.1/connectors/postgresql.html#postgresql-in-the-cloud
 - https://www.youtube.com/watch?v=YNfQon8sC9w&t=39s
+
+
+
+
+

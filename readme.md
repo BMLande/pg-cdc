@@ -1,9 +1,7 @@
 
 # Postgres Change Data Captures (PG-CDC)
 
-[![License](https://img.shields.io/github/license/BMLande/pg-cdc)](LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/BMLande/pg-cdc/ci.yml?branch=main)](https://github.com/BMLande/pg-cdc/actions)
-[![Release](https://img.shields.io/github/v/release/BMLande/pg-cdc)](https://github.com/BMLande/pg-cdc/releases)
+
 
 ## Table of Contents
 
@@ -12,15 +10,15 @@
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Testing](#testing)
-- [Problems](#Problems)
-- [Contact](#Contact)
+- [Problems](#problems)
+- [Contact](#contact)
 - [References](#references)
 
 ---
 
 ## Overview
 
-This service captures PostgreSQL WAL files and automates change data capture (CDC) using Debezium. It leverages a database connector and Kafka to stream and process database changes efficiently.
+This script captures PostgreSQL WAL files and automates change data capture (CDC) using Debezium connector. It leverages a database connector and Kafka to stream and process database changes efficiently.
 
 ## Features
 
@@ -45,7 +43,7 @@ cd pg-cdc
 $ npm install
 ```
 
-# Build docker images and run conatiners for below
+# run conatiners
     
     - kafka
     - postgres
@@ -110,8 +108,6 @@ Now everything is setup, you can test PG cdc by inserting records , with
 Afetr, you can
 - visit kafka UI and check message on added topic
 - visit nodejs script running termianl and can see the received message to subscriber
-
-
 
 
 ## Problems
